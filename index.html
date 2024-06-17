@@ -18,7 +18,7 @@
         <label>Nombre del Personaje<input type="text" id="pj" name="pj" placeholder="Nombre y Apellido" /></label>
         <label>Raza<input type="text" id="raza" name="raza" placeholder="Raza 1/2, 1/4, 1/8" /></label>
         <label>Condición<select name="condicion" id="condicion">
-          <option value="Ninguna">Ninguna</option>
+          <option value="–">Ninguna</option>
           <option value="Maledictus">Maledictus</option>
           <option value="Metamorfomagia">Metamorfomagia</option>
           <option value="Licantropia">Licantropía</option>
@@ -29,12 +29,12 @@
         </select></label>
         <label>Magia Afín <select name="magia-afin" id="magia-afin">
           <option value="">Obligatorio</option>
-          <option value="practica">Magia Práctica</option>
-          <option value="defensiva">Magia Defensiva</option>
-          <option value="combativa">Magia Combativa</option>
-          <option value="transmutadora">Magia Transmutadora</option>
-          <option value="creadora">Magia Creadora</option>
-          <option value="mental">Magia Mental</option>
+          <option value="Práctica">Magia Práctica</option>
+          <option value="Defensiva">Magia Defensiva</option>
+          <option value="Combativa">Magia Combativa</option>
+          <option value="Transmutadora">Magia Transmutadora</option>
+          <option value="Creadora">Magia Creadora</option>
+          <option value="Mental">Magia Mental</option>
         </select></label>
         <label>Edad (sólo el número) <span style="font-size:0.6em">Es importante para el cálculo posterior de los atributos.</span><input type="text" id="edad" name="edad" placeholder="XX"/></label>
       </div>
@@ -92,7 +92,7 @@
         <label for="sum-adq" style="display:none;"></label>
         <input type="button" id="sum-adq" name="sum-adq" value="Agregar" onclick="sumarAdq()" />
             </div>
-      <p>Puedes editar o borrar de ser necesario. Si no tienes nada de esta sección, déjalo en blanco.</p>
+      <p>Puedes editar o borrar de ser necesario. Si no tienes nada de esta sección, déjalo en blanco. Si el nivel de alguna cosa es más que III, toca agregarlo manuealmente en el Nombre.</p>
       <textarea id="total-adq" class="edicion" placeholder="Los artículos se irán agregando en orden descendente."></textarea>
     </section>
 
