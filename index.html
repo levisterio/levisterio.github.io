@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Generador de Cámara de Gringotts</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" href="https://dl.dropbox.com/scl/fi/3zuvvnzcww4yye4epxe8a/style.css?rlkey=yhttvt04pxwis1rmwzfbftuna&st=fi30paeh&dl=0" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&family=Roboto:wght@100;300;400;500;700;900&display=swap" rel="stylesheet">
+<body>
+  <h1>Generador de Cámara</h1>
+  
+  <form id="camara" action="" method="get" enctype="multipart/form-data" target="_self">
+    
+    <!--PERSONAL-->
+    <section><h2>Info Personal</h2>
+      <div>
+        <label>Nombre del Personaje<input type="text" id="pj" name="pj" placeholder="Nombre y Apellido" /></label>
+        <label>Raza<input type="text" id="raza" name="raza" placeholder="Raza 1/2, 1/4, 1/8" /></label>
+        <label>Condición<select name="condicion" id="condicion">
+          <option value="Ninguna">Ninguna</option>
+          <option value="Maledictus">Maledictus</option>
+          <option value="Metamorfomagia">Metamorfomagia</option>
+          <option value="Licantropia">Licantropía</option>
+          <option value="Obscurials">Obscurials</option>
+          <option value="Vampirismo">Vampirismo</option>
+          <option value="Videncia">Videncia</option>
+          <option value="Squibs-conv">Squibs convertidos</option>
+        </select></label>
+        <label>Magia Afín <select name="magia-afin" id="magia-afin">
+          <option value="">Obligatorio</option>
+          <option value="practica">Magia Práctica</option>
+          <option value="defensiva">Magia Defensiva</option>
+          <option value="combativa">Magia Combativa</option>
+          <option value="transmutadora">Magia Transmutadora</option>
+          <option value="creadora">Magia Creadora</option>
+          <option value="mental">Magia Mental</option>
+        </select></label>
+        <label>Edad (sólo el número) <span style="font-size:0.6em">Es importante para el cálculo posterior de los atributos.</span><input type="text" id="edad" name="edad" placeholder="XX"/></label>
+      </div>
+    </section>
+    
+    <!--ATRIBUTOS-->
+    <section><h2>Atributos</h2>
+      <p>Todos los valores deben ser <b>numéricos</b>. Presiona el botón <b>Calcular</b> para generar los Atributos Derivados.</p>
+      <p>Puntos a repartir:</p>
+      <p id="puntos">—</p>
+      <p><b>Importante:</b> el valor máximo por atributo debe ser <span id="ptos-max">x</span> y no puedes tener más de <span id="cant-max">x</span> atributos con el máximo valor.</p>
+      <div id="atributos">
+        <label>Fuerza (FUE)<input type="text" inputmode="numeric" id="fue" name="fue" placeholder="00" /></label>
+        <label>Constitución (CON)<input type="text" inputmode="numeric" id="con" name="con" placeholder="00" /></label>
+        <label>Destreza (DES)<input type="text" inputmode="numeric" id="des" name="des" placeholder="00" /></label>
+        <label>Inteligencia (INT)<input type="text" inputmode="numeric" id="int" name="int" placeholder="00" /></label>
+        <label>Agilidad (AGI)<input type="text" inputmode="numeric" id="agi" name="agi" placeholder="00" /></label>
+        <label>Voluntad (VOL)<input type="text" inputmode="numeric" id="vol" name="vol" placeholder="00" /></label>
+      </div>
+      <label for="calcular" style="display:none;"></label>
+      <input type="button" id="calcular" name="calcular" value="Calcular" onclick="calculo()" />
+      <p id="error" style="margin-bottom: 20px;"></p>
+    </section>
+ 
+    <!--ATRIBUTOS DERIVADOS-->
+    <section><h2>Atributos Derivados</h2>
+      <p>Estos atributos se calculan en automático. Se considera (en base al grupo de edad) que la Defensa Base es <span id="def-base">—</span> y la Salud Base es <span id="salud-base">—</span></p>
+      <div>
+        <label>Daño Base (DB)<input type="text" inputmode="numeric" value="00" id="db" name="db" readonly /></label>
+        <label>Salud<input type="text" inputmode="numeric" value="00" id="salud" name="salud" readonly /></label>
+        <label>Defensa (DEF)<input type="text" inputmode="numeric" value="00" id="def" name="def" readonly /></label>
+        <label>Daño Mental (DM)<input type="text" inputmode="numeric" value="00" id="dm" name="dm" readonly /></label>
+        <label>Cordura (COR)<input type="text" inputmode="numeric" value="00" id="cor" name="cor" readonly /></label>
+      </div>
+    </section>
+
+    <!--ADQUISICIÓN-->
+    <section><h2>Adquisiciones mágicas y certificados</h2>
+      <div>
+        <label>Nombre<input type="text" id="name-adq" name="name-adq" placeholder="Nombre" /></label>
+        <label>Tipo de adquisición<select name="tipo-adq" id="tipo-adq">     <option value="Criatura">Criatura</option>
+          <option value="Habilidades">Habilidades</option>
+          <option value="Condición">Condición</option>
+          <option value="Certificados">Certificados</option>
+          <option value="Desventajas">Desventajas</option>
+          <option value="Idiomas">Idiomas</option>
+        </select></label>
+          <label>Nivel<select name="lvl-adq" id="lvl-adq">
+            <option value="">No aplica</option>
+            <option value="Nivel I">Nivel I</option>
+            <option value="Nivel II">Nivel II</option>
+            <option value="Nivel III">Nivel III</option>
+          </select></label>
+            <label>Descripción<textarea id="desc-adq" name="desc-adq" placeholder="Pega la descripción aquí."></textarea></label>
+        <label for="sum-adq" style="display:none;"></label>
+        <input type="button" id="sum-adq" name="sum-adq" value="Agregar" onclick="sumarAdq()" />
+            </div>
+      <p>Puedes editar o borrar de ser necesario. Si no tienes nada de esta sección, déjalo en blanco.</p>
+      <textarea id="total-adq" class="edicion" placeholder="Los artículos se irán agregando en orden descendente."></textarea>
+    </section>
+
+    <!--CÁMARA DE GRINGOTTS-->
+    <section><h2>Cámara de Gringotts</h2>
+      <div>
+        <label>Nombre<input type="text" id="name-grin" name="name-grin" placeholder="Nombre" /></label>
+        <label>Tipo de objeto<select name="tipo-grin" id="tipo-grin">
+          <option value="Objetos">Objetos</option>
+          <option value="Ingredientes">Ingredientes</option>
+          <option value="Pociones">Pociones</option>
+          <option value="Herramientas">Herramientas</option>
+        </select></label>
+            <label>Descripción<textarea id="desc-grin" name="desc-grin" placeholder="Pega la descripción aquí."></textarea></label>
+            </div>
+        <label for="sum-grin" style="display:none;"></label>
+        <input type="button" id="sum-grin" name="sum-grin" value="Agregar" onclick="sumarGrin()" />
+      <p>Puedes editar o borrar de ser necesario. Si no tienes nada de esta sección, déjalo en blanco.</p>
+      <textarea id="total-grin" class="edicion" placeholder="Los artículos se irán agregando en orden descendente."></textarea>
+      </div>
+    </section>
+
+     <!--LIBROS DE HECHIZOS-->
+    <section><h2>Libros de Hechizos</h2>
+      <p>Aquí toca agregar las códigos a mano, porque ya me dio flojera seguir. Copia y pega el código de hechizo y agrégalo en el <strong>espacio destinado a cada tipo de magia y su nivel</strong>.</p>
+      <code style="width:80%; margin:30px;">[b]Nombre.[/b] Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras vitae commodo metus. Cras venenatis eros ipsum, vel lobortis nisi ullamcorper eget. Ut id dignissim leo.</code>
+      <label>Magia Práctica<textarea id="h-practica" class="edicion">
+<h-nivel>Nivel I</h-nivel><br>
+—
+<br><h-nivel>Nivel II</h-nivel><br>
+—
+<br><h-nivel>Nivel III</h-nivel><br>
+—
+<br><h-nivel>Nivel IV</h-nivel><br>
+—
+<br><h-nivel>Nivel V</h-nivel><br>
+—</textarea></label>
+      <label>Magia Combativa<textarea id="h-combativa" class="edicion">
+<h-nivel>Nivel I</h-nivel><br><br>
+—
+<br><h-nivel>Nivel II</h-nivel><br>
+—
+<br><h-nivel>Nivel III</h-nivel><br>
+—
+<br><h-nivel>Nivel IV</h-nivel><br>
+—
+<br><h-nivel>Nivel V</h-nivel><br>
+—</textarea></label>
+      <label>Magia Defensiva<textarea id="h-defensiva" class="edicion">
+        <h-nivel>Nivel I</h-nivel><br><br>
+        —
+        <br><h-nivel>Nivel II</h-nivel><br>
+        —
+        <br><h-nivel>Nivel III</h-nivel><br>
+        —
+        <br><h-nivel>Nivel IV</h-nivel><br>
+        —
+        <br><h-nivel>Nivel V</h-nivel><br>
+—</textarea></label>
+      <label>Magia Transmutadora<textarea id="h-transmuta" class="edicion">
+        <h-nivel>Nivel I</h-nivel><br><br>
+        —
+        <br><h-nivel>Nivel II</h-nivel><br>
+        —
+        <br><h-nivel>Nivel III</h-nivel><br>
+        —
+        <br><h-nivel>Nivel IV</h-nivel><br>
+        —
+        <br><h-nivel>Nivel V</h-nivel><br>
+—</textarea></label>
+      <label>Magia Creadora<textarea id="h-creadora" class="edicion">
+        <h-nivel>Nivel I</h-nivel><br><br>
+        —
+        <br><h-nivel>Nivel II</h-nivel><br>
+        —
+        <br><h-nivel>Nivel III</h-nivel><br>
+        —
+        <br><h-nivel>Nivel IV</h-nivel><br>
+        —
+        <br><h-nivel>Nivel V</h-nivel><br>
+—</textarea></label>
+      <label>Magia Mental<textarea id="h-mental" class="edicion">
+        <h-nivel>Nivel I</h-nivel><br><br>
+        —
+        <br><h-nivel>Nivel II</h-nivel><br>
+        —
+        <br><h-nivel>Nivel III</h-nivel><br>
+        —
+        <br><h-nivel>Nivel IV</h-nivel><br>
+        —
+        <br><h-nivel>Nivel V</h-nivel><br>
+—</textarea></label>
+    </section>
+      
+    <input type="button" id="generar" value="Generar Código" onclick="generarCode()" />
+  
+    </form>
+  
+  <h1>Código</h1>
+  
+  <div class="codebox"><span onclick="seleccionar()">Seleccionar y Copiar</span><code id="codigo_camara">Aún no has generado código.</code></div>
+  
+  <p style="color: var(--low-graf); margin: 20px;">© 2024 Levisterio – bad.weather</p>
+  <script src="https://dl.dropbox.com/scl/fi/5c4gnsyq9e96rmmzugbp8/script.js?rlkey=zfnqgfkgfjlrl8u4v34icq5ov&st=6jg0bn2i&dl=0" type="text/javascript"></script>
+</body></html>
