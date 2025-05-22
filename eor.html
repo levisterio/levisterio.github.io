@@ -13,10 +13,6 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&amp;family=Roboto:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
     <style>
-        textarea {
-            color: var(--)
-        }
-
         a {
         text-underline-offset: 3px;
         color: inherit;
@@ -103,17 +99,18 @@ padding-left: 15px;
                 <option value="Cuerpo a cuerpo" data-filter="eor-f3">Cuerpo a Cuerpo</option>
                 <option value="Sables" data-filter="eor-f4">Sables</option>
                 <option value="">---NAVES---</option>
-                <option value="f1" data-filter="eor-f1">-</option>
-                <option value="f2" data-filter="eor-f2">-</option>
-                <option value="f3" data-filter="eor-f3">-</option>
-                <option value="f4" data-filter="eor-f4">-</option>
+                <option value="Naves espaciales" data-filter="eor-f1">Naves espaciales</option>
+                <option value="Vehículos terrestres" data-filter="eor-f2">Vehículos terrestres</option>
+                <option value="Vehículos acuáticos" data-filter="eor-f3">Vehículos acuáticos</option>
+                <option value="Monturas" data-filter="eor-f4">Monturas</option>
                 <option value="">---MISCELÁNEO---</option>
                 <option value="Consumibles" data-filter="eor-f1">Consumibles</option>
-                <option value="Vehículos" data-filter="eor-f2">Vehículos</option>
+                <option value="Vehículos" data-filter="eor-f2">Viviendas</option>
                 <option value="Mejoras" data-filter="eor-f3">Mejoras</option>
                 <option value="Gadgets" data-filter="eor-f4">Gadgets</option>
               </select></label>
-             <label>Descripción<textarea id="desc-adq" name="desc-adq" placeholder="Descripción del artículo."></textarea></label>
+              <label>Descripción para tienda<textarea id="desc-adq" name="desc-adq" placeholder="Descripción detallada del artículo."></textarea></label>
+              <label>Descripción para inventario<textarea id="desc-inv" name="desc-inv" placeholder="Descripción para el tooltip del inventario. Los saltos se escriben con <br/>"></textarea></label>
             </div>
             <input type="button" id="sum-adq" name="sum-adq" value="Agregar" onclick="agregar()">
             <div>
@@ -133,6 +130,7 @@ let name = '',
     price = '',
     tipo = '',
     descrip = '',
+    descInv = '',
     filter = '',
     item = '',
     list = '',
@@ -153,9 +151,10 @@ function agregar() {
     filter = s.options[s.selectedIndex].dataset.filter;
 
     descrip = document.getElementById('desc-adq').value;
+    descInv = document.getElementById('desc-inv').value;
 
     item = '<li class="' + filter + '"><div class="epl-icon"><img src="https://api.iconify.design/' + icon + '.svg?color=%23cfcfcf"></div><div class="epl-name">' + name + 
-           '</div><div class="epl-price"><span>' + price + '</span> créditos</div><div class="epl-desc">' + descrip + '</div><div class="epl-bono">' + tipo +
+           '</div><div class="epl-price"><span>' + price + '</span> créditos</div><div class="epl-desc">' + descrip + '</div><div class="epl-dinv">' + descInv + '</div><div class="epl-bono">' + tipo +
            '</div><button><i class="bi bi-cart4"></i></button> </li>';
 
     final += item;
@@ -171,6 +170,7 @@ function agregar() {
     tipo = '';
     filter = '';
     descrip = '';
+    descInv = '';
     document.getElementById("tienda").reset()
 }
 
